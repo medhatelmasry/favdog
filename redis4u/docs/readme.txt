@@ -9,7 +9,7 @@ docker pull redis:3.2.11
 
 docker run –p 6379:6379 redis:3.2.11
 
-    dotnet add package Microsoft.Extensions.Caching.Redis.Core
+    dotnet add package Microsoft.Extensions.Caching.Redis@2.0.2
     dotnet add package Microsoft.AspNetCore.Session@2.1.0-preview1-final
 
 Add to appsettings.json:

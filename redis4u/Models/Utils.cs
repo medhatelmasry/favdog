@@ -24,6 +24,7 @@ namespace redis4u.Models
                     PictureUrl = pict.Replace(@"\", @"/"),
                     Name = name
                 };
+
                 dogs.Add(dog);
             }
             return dogs;
@@ -32,7 +33,13 @@ namespace redis4u.Models
         public static string[] GetFiles(IHostingEnvironment env)
         {
             var webRoot = env.WebRootPath;
-            string dir = webRoot + @"\images\dogs";
+            string dir = string.Empty;
+
+            if (OperatingSystem.IsWindows())
+                dir = webRoot + @"\images\dogs";
+            else
+                dir = webRoot + @"/images/dogs";
+
             string[] files = System.IO.Directory.GetFiles(dir);
             return files;
         }
