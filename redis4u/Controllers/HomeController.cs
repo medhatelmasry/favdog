@@ -87,26 +87,7 @@ namespace redis4u.Controllers
 
             string[] files = Utils.GetFiles(_env);
             List<Animal> dogs = Utils.GetAnimals(files, _env);
-
-            List<AnimalVote> votes = new List<AnimalVote>();
-            foreach (var item in dogs)
-            {
-                var strVote = _cache.GetString(item.Name);
-                int intVote = 0;
-                if (!string.IsNullOrEmpty(strVote))
-                {
-                    intVote = Convert.ToInt32(strVote);
-                }
-
-                AnimalVote vote = new AnimalVote()
-                {
-                    Name=item.Name,
-                    Count=intVote,
-                    PictureUrl=item.PictureUrl,
-                };
-
-                votes.Add(vote);
-            }
+            List<AnimalVote> votes = Utils.GetVotes(dogs, _cache);
 
             int totalCount = votes.Sum(v => v.Count);
 

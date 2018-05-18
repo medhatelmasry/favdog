@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,5 +45,30 @@ namespace redis4u.Models
             return files;
         }
 
+        public static List<AnimalVote> GetVotes(List<Animal> dogs,
+            IDistributedCache cache)
+        {
+            List<AnimalVote> votes = new List<AnimalVote>();
+            foreach (var item in dogs)
+            {
+                var strVote = cache.GetString(item.Name);
+                int intVote = 0;
+                if (!string.IsNullOrEmpty(strVote))
+                {
+                    intVote = Convert.ToInt32(strVote);
+                }
+
+                AnimalVote vote = new AnimalVote()
+                {
+                    Name = item.Name,
+                    Count = intVote,
+                    PictureUrl = item.PictureUrl,
+                };
+
+                votes.Add(vote);
+            }
+
+            return votes;
+        }
     }
 }
