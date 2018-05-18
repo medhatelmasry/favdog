@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:3.2.11
+    restart: always
+
+  mvc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+    ports:
+      - "8888:80"
+    #restart: always
+    environment:
+      - REDIS_NAME=FavDog
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+

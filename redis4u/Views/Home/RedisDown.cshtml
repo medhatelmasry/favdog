@@ -1,0 +1,11 @@
+﻿@model IEnumerable<redis4u.Models.Animal>
+
+@{
+    ViewData["Title"] = "The Redis server is down or not started.";
+}
+
+<h2>@ViewData["Title"]</h2>
+<p>You can start a Redis docker container with the following command:</p>
+<pre>
+    docker run –p 6379:6379 redis:3.2.11
+</pre>

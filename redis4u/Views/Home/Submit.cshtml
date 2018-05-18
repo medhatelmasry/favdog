@@ -1,0 +1,44 @@
+﻿@model IEnumerable<redis4u.Models.AnimalVote>
+
+@{
+    ViewData["Title"] = "Favorite dog breed voted by you.";
+    int count = 1;
+    int columns = Convert.ToInt16(ViewBag.Columns);
+    decimal portion = 100 / columns;
+    int percent = (int) Math.Floor(portion);
+    string strPercent = percent.ToString() + "%";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            string url = item.PictureUrl;
+            if (count == 1)
+            {@Html.Raw("<tr>");
+        }
+
+    <td style="width: @strPercent">
+        <a href="/home/submit/@item.Name">
+            <img src="@url" alt="@item.Name" style="width:100px"
+                 class="img-thumbnail" />
+            <br />@item.Name
+            <br />Votes: @item.Count &nbsp;&nbsp;&nbsp; <b>@item.Percent %</b>
+        </a>
+    </td>
+
+    if (count == Model.Count())
+    {
+        @Html.Raw("</tr>");
+    }
+    else if (count % columns == 0)
+    {
+        @Html.Raw("</tr><tr>");
+    }
+
+    count++;
+}
+        </tbody>
+    </table>
